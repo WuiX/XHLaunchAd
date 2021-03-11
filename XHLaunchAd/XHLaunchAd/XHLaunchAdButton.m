@@ -36,7 +36,13 @@
     if (self) {
         
         _skipType = skipType;
-        CGFloat y = XH_FULLSCREEN ? 44 : 20;
+        BOOL isFullScreen = NO;
+        if (@available(iOS 11.0, *)) {
+            UIWindow *window = UIApplication.sharedApplication.delegate.window;
+            isFullScreen = window.safeAreaInsets.bottom > 0 || window.safeAreaInsets.left > 0;
+        }
+
+        CGFloat y = isFullScreen ? 44 : 20;
         self.frame = CGRectMake(XH_ScreenW-80,y, 70, 35);//方形
         switch (skipType) {
             case SkipTypeRoundTime:
